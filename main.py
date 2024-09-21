@@ -11,6 +11,8 @@ pygame.init()
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
+LIGHT_BLUE = (150, 200, 255)  # Light blue color for the box
+LIGHT_YELLOW = (255, 255, 197)
 
 # initialize a screen w/ correct dimensions for display
 screen_width = 1200
@@ -38,12 +40,10 @@ while running:
     # EXAMPLE: MOVING OBJECTS, COLLISION DETECTION, ETC. 
 
     # clear the screen (make it black)
-    screen.fill(WHITE)
+    screen.fill(LIGHT_BLUE)
 
     # ADD YOUR OWN CODE TO DRAW EVERYTHING ON THE SCREEN HERE
     # EXAMPLE: screen.blit(your_surface, (x, y)) FOR DISPLAYING IMAGES
-
-
 
     # set limit on num frames per second game will render (cap the frame rate)
     
@@ -57,15 +57,25 @@ while running:
     if total_time >= seconds_for_day:
         total_time -= seconds_for_day
         game_date = new_ingame_day(game_date)
-
+    
     current_date_str = game_date.strftime("%Y-%m-%d")
-    date_text = font.render(f"Game Date: {current_date_str}", True, BLACK)
+    date_text = font.render(f"Date: {current_date_str}", True, BLACK)
     text_width, text_height = date_text.get_size()
+    
+    padding = 10
 
+    # Define the rectangle for the box with padding
+    box_rect = pygame.Rect(
+        screen_width - text_width - 2*padding,  # X position
+        0,                                            # Y position
+        text_width + padding * 2,                      # Box width (text width + padding on both sides)
+        text_height + padding * 2                      # Box height (text height + padding on top and bottom)
+    )
+    
+    # add border to rectangle?
+    pygame.draw.rect(screen, LIGHT_YELLOW, box_rect)
 
-    #pygame.draw.rect(screen, BLUE, (screen_width//2 - 25, screen_height//2 - 30, 50, 60))
-
-    screen.blit(date_text, (screen_width - text_width, 10))  # Display the date at the top-left corner
+    screen.blit(date_text, ((box_rect.x + padding, box_rect.y + padding)))  # Display the date at the top-left corner
 
     # update the screen display
     pygame.display.flip()
