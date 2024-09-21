@@ -6,6 +6,16 @@ def new_ingame_day(date):
     date += datetime.timedelta(days=1)
     return date
 
+def draw_box(screen, button_color, x, y, width, height, text):
+    box_rect = pygame.Rect(
+        screen_width - text_width - 2*padding,  # X position
+        0,                                            # Y position
+        text_width + padding * 2,                      # Box width (text width + padding on both sides)
+        text_height + padding * 2                      # Box height (text height + padding on top and bottom)
+    )
+    pygame.draw.rect(screen, button_color, box_rect)
+
+
 pygame.init()
 
 WHITE = (255, 255, 255)
@@ -58,6 +68,8 @@ while running:
         total_time -= seconds_for_day
         game_date = new_ingame_day(game_date)
     
+    draw_box(screen, LIGHT_YELLOW, )
+
     current_date_str = game_date.strftime("%Y-%m-%d")
     date_text = font.render(f"Date: {current_date_str}", True, BLACK)
     text_width, text_height = date_text.get_size()
@@ -65,15 +77,9 @@ while running:
     padding = 10
 
     # Define the rectangle for the box with padding
-    box_rect = pygame.Rect(
-        screen_width - text_width - 2*padding,  # X position
-        0,                                            # Y position
-        text_width + padding * 2,                      # Box width (text width + padding on both sides)
-        text_height + padding * 2                      # Box height (text height + padding on top and bottom)
-    )
+    
     
     # add border to rectangle?
-    pygame.draw.rect(screen, LIGHT_YELLOW, box_rect)
 
     screen.blit(date_text, ((box_rect.x + padding, box_rect.y + padding)))  # Display the date at the top-left corner
 
