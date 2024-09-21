@@ -1,12 +1,24 @@
 import pygame
 import sys
+import datetime
+
+def new_ingame_day():
+    return None
+
+
 pygame.init()
 
 # initialize a screen w/ correct dimensions for display
 screen = pygame.display.set_mode((1200, 700))
 
+pygame.display.set_caption('Hackathon Game - Date Function')
+
 # create an object to help track time
 clock = pygame.time.Clock()
+total_time = 0
+game_date = datetime.datetime(2024, 1, 1)
+
+font = pygame.font.Font(None, 36) 
 running = True
 
 while running:
@@ -29,7 +41,15 @@ while running:
     pygame.display.flip()
 
     # set limit on num frames per second game will render (cap the frame rate)
-    clock.tick(60)
+    
+    # set limit on num frames per second game will render (cap the frame rate)
+    delta_seconds = clock.tick(60) / 1000
+
+    total_time += delta_seconds
+
+    if total_time >= 60:
+        total_time -= 60
+        new_ingame_day()
 
 # quit Pygame
 pygame.quit()
