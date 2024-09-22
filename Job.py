@@ -1,6 +1,6 @@
 import Bank
-salary = 0
-clickSalary = 0
+salary = 800
+clickSalary = 10
 
 def setClickSalary(s):
     global clickSalary

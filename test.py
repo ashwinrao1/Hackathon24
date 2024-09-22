@@ -1,6 +1,9 @@
 import pygame
 import sys
 import datetime
+from Job import getSalary
+from Job import  clicked
+
 
 # Initialize Pygame
 pygame.init()
@@ -22,7 +25,7 @@ pygame.display.set_caption('Menu Example')
 
 
 # Button positions for main menu
-num_home_buttons = 6  # Home, Job, Bank, Investments, Goals, Static-Stats
+num_home_buttons = 5  # Home, Job, Bank, Investments, Goals, Static-Stats
 
 # Button dimensions
 button_width = screen_width // num_home_buttons  # Each button occupies an equal width
@@ -34,15 +37,25 @@ home_buttons = {
     "Job": (button_width, 0, button_width, button_height),
     "Bank": (2 * button_width, 0, button_width, button_height),
     "Investments": (3 * button_width, 0, button_width, button_height),
-    "Goals": (4 * button_width, 0, button_width, button_height),
+    #"Goals": (4 * button_width, 0, button_width, button_height),
 }
 
 statistics = {
-    "Date": (int(5.20 * button_width), 0, int(0.8 * button_width), button_height // 2)
+    "Date": (int(4.20 * button_width), 0, int(0.8 * button_width), button_height // 2)
 }
 
+clicker_width = 500
+clicker_height = 250
+money_width = 300
+money_height = 50
+
 job_buttons = {
-    "Clicker" : (screen_width // 5 * 3, screen_height // 5 * 3, 400, 200)
+    "Clicker" : (screen_width // 2 - clicker_width // 2, screen_height // 5 * 3 - clicker_height // 2, clicker_width, clicker_height),
+    "Salary" : (screen_width // 2 - money_width // 2, screen_height // 5 * 3 - clicker_height // 2 - money_height * 2, money_width, money_height)
+}
+
+bank_buttons = {
+    "Checking"
 }
 
 # Define Clock for frame rate control
@@ -100,10 +113,8 @@ def game_loop():
                         current_screen = label
                 
                 if current_screen == "Job":
-                    # Check if "Back" button is clicked
                     if is_mouse_over_button(mouse_pos, job_buttons["Clicker"]):
-                        #TODO: function to make money
-                        {}
+                        clicked()
 
 
         # Clear the screen with white background
@@ -122,15 +133,31 @@ def game_loop():
 
         # Draw the appropriate screen
         if current_screen == "Home":
-            # do something'
+            # do something
             draw_button("Home", home_buttons["Home"], ORANGE, BLACK)
-            {}
+            
 
         elif current_screen == "Job":
             draw_button("Job", home_buttons["Job"], ORANGE, BLACK)
             draw_button("Click to make money", job_buttons["Clicker"], WHITE, BLACK)
-            # do something
-            
+            draw_button("Salary: " + str(getSalary()) + '$', job_buttons["Salary"], WHITE, BLACK)
+
+            #draw inputbox
+            txt_surface = font.render(text, True, BLACK)
+            width = max(300, txt_surface.get_width() + 10)  # Resize the box if needed
+            input_box.w = width
+            pygame.draw.rect(screen, color, input_box, 2)  # Draw the text box (border)
+            screen.blit(txt_surface, (input_box.x + 5, input_box.y + 5))  # Render the text
+
+        
+        elif current_screen == "Bank":
+            draw_button("Bank", home_buttons["Bank"], ORANGE, BLACK)
+
+        elif current_screen == "Investments":
+            draw_button("Investments", home_buttons["Investments"], ORANGE, BLACK)
+
+        else:
+            print("error")
 
         # Update the display
         pygame.display.flip()
