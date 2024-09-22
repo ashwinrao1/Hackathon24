@@ -1,7 +1,7 @@
 savingsAPR = 1+ 0.05
 savingsBalance = 0
 checkingBalance = 0
-checkingPercent = 50
+checkingPercent = 0.5
 savingsPercent = 1-checkingPercent
 savingsHistory  = []
 checkingHistory  = []
@@ -57,9 +57,8 @@ def addToAccountNOLOG(money):
     savingsBalance+=money*savingsPercent
     checkingBalance += money * (1-savingsPercent)
 def init():
-    setCheckingBalance(100)
-    setSavingsBalance(100)
-    setSettings(0.10)
-    addToAccount(100, "Just cuz")
-    print(getCheckingBalance(), getSavingsBalance())
+    setCheckingBalance(1000)
+    setSavingsBalance(1000)
+    
+   
 init()
